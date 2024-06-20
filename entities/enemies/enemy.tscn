@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bbait21t7tafw"]
+[gd_scene load_steps=10 format=3 uid="uid://bbait21t7tafw"]
 
-[ext_resource type="Script" path="res://enemy.gd" id="1_el3h3"]
-[ext_resource type="Texture2D" uid="uid://c5535iua2di43" path="res://assets/mini_pixel_pack_3/Enemies/Bon_Bon (16 x 16).png" id="2_r0uic"]
-[ext_resource type="Texture2D" uid="uid://bew18hjijjrhn" path="res://assets/mini_pixel_pack_3/Effects/Explosion (16 x 16).png" id="3_xlgmj"]
+[ext_resource type="Script" path="res://entities/enemies/enemy.gd" id="1_4irfq"]
+[ext_resource type="Texture2D" uid="uid://c5535iua2di43" path="res://assets/mini_pixel_pack_3/Enemies/Bon_Bon (16 x 16).png" id="2_my888"]
+[ext_resource type="PackedScene" uid="uid://bvns62eo7e30" path="res://entities/weapons/enemy_bullet.tscn" id="2_psfr3"]
+[ext_resource type="Texture2D" uid="uid://bew18hjijjrhn" path="res://assets/mini_pixel_pack_3/Effects/Explosion (16 x 16).png" id="3_l5ltf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1ra0"]
 size = Vector2(14, 8)
@@ -60,7 +61,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_r0uic")]
+"values": [ExtResource("2_my888")]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -89,7 +90,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_xlgmj")]
+"values": [ExtResource("3_l5ltf")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -124,10 +125,11 @@ _data = {
 }
 
 [node name="Enemy" type="Area2D" groups=["enemies"]]
-script = ExtResource("1_el3h3")
+script = ExtResource("1_4irfq")
+enemy_bullet_scene = ExtResource("2_psfr3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_r0uic")
+texture = ExtResource("2_my888")
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -139,14 +141,11 @@ libraries = {
 "": SubResource("AnimationLibrary_3itcp")
 }
 
-[node name="MoveTimer" type="Timer" parent="."]
-one_shot = true
-
 [node name="ShootTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,0 +1,104 @@
+[gd_scene load_steps=18 format=3 uid="uid://wu5wq74iwpu7"]
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_m875u"]
+[ext_resource type="PackedScene" uid="uid://dsjgfg7d6uma" path="res://entities/weapons/bullet.tscn" id="2_hdjkl"]
+[ext_resource type="Texture2D" uid="uid://bkyhjv74ygp4o" path="res://assets/mini_pixel_pack_3/Player ship/Player_ship (16 x 16).png" id="3_cvgqi"]
+[ext_resource type="Texture2D" uid="uid://cc2ka30ornr7j" path="res://assets/mini_pixel_pack_3/Player ship/Boosters (16 x 16).png" id="4_5togq"]
+[ext_resource type="Texture2D" uid="uid://be2ekb4oby65r" path="res://assets/mini_pixel_pack_3/Player ship/Boosters_left (16 x 16).png" id="5_xdifc"]
+[ext_resource type="Texture2D" uid="uid://1jh67mcsv56x" path="res://assets/mini_pixel_pack_3/Player ship/Boosters_right (16 x 16).png" id="6_5fpoj"]
+[ext_resource type="PackedScene" uid="uid://ct0vhxkwov774" path="res://entities/components/health_component.tscn" id="7_v8p5q"]
+[ext_resource type="PackedScene" uid="uid://c4p0n0ubobjpx" path="res://entities/components/weapon_component.tscn" id="9_otnss"]
+[ext_resource type="PackedScene" uid="uid://bpk4m4jpaeu78" path="res://entities/components/hitbox_component.tscn" id="9_ra1sa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5rjm"]
+atlas = ExtResource("4_5togq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57yy8"]
+atlas = ExtResource("4_5togq")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_odae2"]
+atlas = ExtResource("5_xdifc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs4c1"]
+atlas = ExtResource("5_xdifc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8cpj"]
+atlas = ExtResource("6_5fpoj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfvuk"]
+atlas = ExtResource("6_5fpoj")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cwy8w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5rjm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57yy8")
+}],
+"loop": true,
+"name": &"forward",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odae2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs4c1")
+}],
+"loop": true,
+"name": &"left",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8cpj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfvuk")
+}],
+"loop": true,
+"name": &"right",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uf2d"]
+size = Vector2(14, 14)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_m875u")
+speed = 200
+bullet_scene = ExtResource("2_hdjkl")
+
+[node name="Ship" type="Sprite2D" parent="."]
+texture = ExtResource("3_cvgqi")
+hframes = 3
+frame = 1
+
+[node name="Boosters" type="AnimatedSprite2D" parent="Ship"]
+position = Vector2(0, 15)
+sprite_frames = SubResource("SpriteFrames_cwy8w")
+animation = &"forward"
+autoplay = "forward"
+
+[node name="HealthComponent" parent="." instance=ExtResource("7_v8p5q")]
+MAX_HEALTH = 5.0
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_ra1sa")]
+health_component = NodePath("../HealthComponent")
+
+[node name="Hitbox" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_5uf2d")
+
+[node name="WeaponComponent" parent="." instance=ExtResource("9_otnss")]
+bullet_scene = ExtResource("2_hdjkl")
+is_player = true
+autofire = true

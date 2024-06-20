@@ -1,0 +1,246 @@
+[gd_scene load_steps=17 format=3 uid="uid://cj3b5o02mbmbq"]
+
+[ext_resource type="Script" path="res://entities/scenes/main.gd" id="1_f8fjj"]
+[ext_resource type="PackedScene" uid="uid://wu5wq74iwpu7" path="res://entities/player/player.tscn" id="2_awrxc"]
+[ext_resource type="PackedScene" uid="uid://bbait21t7tafw" path="res://entities/enemies/enemy.tscn" id="2_gys5g"]
+[ext_resource type="Texture2D" uid="uid://bgfnwajbryi1s" path="res://assets/space_bg.tres" id="4_0681v"]
+[ext_resource type="PackedScene" uid="uid://cuus2lgqr0svr" path="res://entities/ui/ui.tscn" id="4_xtkop"]
+[ext_resource type="FontFile" uid="uid://d0mqsix6x3qm6" path="res://assets/fonts/at01.ttf" id="5_hw7bg"]
+[ext_resource type="Texture2D" uid="uid://c3ruq46vllnr5" path="res://assets/mini_pixel_pack_3/UI objects/Item_held_box (16 x 16).png" id="6_he846"]
+[ext_resource type="Script" path="res://entities/ui/pause_menu.gd" id="7_0edch"]
+[ext_resource type="Texture2D" uid="uid://bpn62aabunxva" path="res://addons/silent_wolf/assets/gfx/checkbox_checked.png" id="7_rjc1x"]
+[ext_resource type="PackedScene" uid="uid://dkfevuej6fbim" path="res://entities/components/enemy_spawner_component.tscn" id="10_0ral2"]
+
+[sub_resource type="Animation" id="Animation_prj03"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 240, 320)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BackgroundCanvas/Container/Background:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bl7kr"]
+resource_name = "scroll"
+length = 4.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 240, 320), Rect2(0, -64, 240, 320)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BackgroundCanvas/Container/Background:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -64), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jfwta"]
+_data = {
+"RESET": SubResource("Animation_prj03"),
+"scroll": SubResource("Animation_bl7kr")
+}
+
+[sub_resource type="FontVariation" id="FontVariation_i8wks"]
+base_font = ExtResource("5_hw7bg")
+spacing_glyph = 2
+spacing_space = 4
+
+[sub_resource type="FontVariation" id="FontVariation_xoxy3"]
+base_font = ExtResource("5_hw7bg")
+spacing_glyph = 2
+spacing_space = 4
+spacing_top = -4
+spacing_bottom = -1
+
+[sub_resource type="FontVariation" id="FontVariation_gglhf"]
+base_font = ExtResource("5_hw7bg")
+spacing_glyph = 2
+spacing_space = 4
+spacing_top = -4
+spacing_bottom = -4
+
+[node name="Main" type="Node2D"]
+show_behind_parent = true
+script = ExtResource("1_f8fjj")
+player = ExtResource("2_awrxc")
+enemy = ExtResource("2_gys5g")
+
+[node name="BackgroundCanvas" type="CanvasLayer" parent="."]
+layer = -128
+
+[node name="Container" type="Control" parent="BackgroundCanvas"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="BackgroundCanvas/Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 3240.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.00947)
+texture = ExtResource("4_0681v")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="Sprite2D" parent="."]
+process_mode = 1
+visible = false
+texture_repeat = 2
+position = Vector2(0, 2.38418e-07)
+scale = Vector2(0.998, 1)
+texture = ExtResource("4_0681v")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 240, 320)
+region_filter_clip_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "scroll"
+libraries = {
+"": SubResource("AnimationLibrary_jfwta")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="GameTitleContainer" type="HBoxContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(0, 160)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 160.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="GameTitle" type="Label" parent="CanvasLayer/GameTitleContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0703125, 0.714844, 0.144531, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.371094, 0.347656, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_i8wks")
+theme_override_font_sizes/font_size = 64
+text = "Rogue
+Starbound"
+horizontal_alignment = 1
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("4_xtkop")]
+offset_bottom = 36.0
+scale = Vector2(0.990244, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="TextureButton" parent="CanvasLayer/CenterContainer"]
+custom_minimum_size = Vector2(60, 20)
+layout_mode = 2
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="CanvasLayer/CenterContainer/Start"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-2, -6.00001)
+scale = Vector2(1.6, 0.8)
+texture_normal = ExtResource("7_rjc1x")
+visibility_mode = 1
+
+[node name="StartText" type="Label" parent="CanvasLayer/CenterContainer/Start"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.464844, 0.796875, 0.164063, 1)
+theme_override_colors/font_shadow_color = Color(0.0273438, 0.488281, 0.324219, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_xoxy3")
+theme_override_font_sizes/font_size = 16
+text = "START!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/CenterContainer/Start"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+nine_patch_stretch = true
+stretch_margin_left = 10
+stretch_margin_top = 10
+stretch_margin_right = 10
+stretch_margin_bottom = 10
+texture_under = ExtResource("6_he846")
+
+[node name="GameOver" type="Label" parent="CanvasLayer/CenterContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.996094, 0.273438, 0.273438, 1)
+theme_override_colors/font_shadow_color = Color(0.617188, 0.0742188, 0.15625, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_gglhf")
+text = "GAME OVER"
+
+[node name="PauseMenu" type="MarginContainer" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_0edch")
+
+[node name="EnemySpawnerComponent" parent="." instance=ExtResource("10_0ral2")]
+enemy = ExtResource("2_gys5g")
+
+[connection signal="pressed" from="CanvasLayer/CenterContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/Start/TouchScreenButton" to="." method="_on_start_pressed"]

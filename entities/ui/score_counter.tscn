@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://dwdwyg5ddsygd"]
+[gd_scene load_steps=20 format=3 uid="uid://dwdwyg5ddsygd"]
 
-[ext_resource type="Script" path="res://score_counter.gd" id="1_ex2qn"]
+[ext_resource type="Script" path="res://entities/ui/score_counter.gd" id="1_31b1j"]
+[ext_resource type="FontFile" uid="uid://d0mqsix6x3qm6" path="res://assets/fonts/at01.ttf" id="2_0hyd2"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_e3d54"]
 load_path = "res://.godot/imported/Number_font (8 x 8).png-e706f36eadb140398b2a07c1b9215654.ctex"
@@ -58,6 +59,13 @@ load_path = "res://.godot/imported/Number_font (8 x 8).png-e706f36eadb140398b2a0
 atlas = SubResource("CompressedTexture2D_uq4fk")
 region = Rect2(32, 8, 8, 8)
 
+[sub_resource type="FontVariation" id="FontVariation_kues4"]
+base_font = ExtResource("2_0hyd2")
+spacing_glyph = 2
+spacing_space = 4
+spacing_top = 2
+spacing_bottom = -2
+
 [node name="ScoreCounter" type="HBoxContainer"]
 anchors_preset = 10
 anchor_right = 1.0
@@ -65,44 +73,63 @@ offset_bottom = 8.0
 grow_horizontal = 2
 theme_override_constants/separation = 0
 alignment = 2
-script = ExtResource("1_ex2qn")
+script = ExtResource("1_31b1j")
 
 [node name="Digit0" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_q2nbi")
 stretch_mode = 5
 
 [node name="Digit1" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_ly2sh")
 stretch_mode = 5
 
 [node name="Digit2" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_b86ox")
 stretch_mode = 5
 
 [node name="Digit3" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_khbrm")
 stretch_mode = 5
 
 [node name="Digit4" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_ekbg8")
 stretch_mode = 5
 
 [node name="Digit5" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_38ert")
 stretch_mode = 5
 
 [node name="Digit6" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_ibleq")
 stretch_mode = 5
 
 [node name="Digit7" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_gur45")
 stretch_mode = 5
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945313, 0.941406, 0.9375, 1)
+theme_override_colors/font_shadow_color = Color(0.0585938, 0.441406, 0.660156, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_kues4")
+theme_override_font_sizes/font_size = 16
+text = "00000000"

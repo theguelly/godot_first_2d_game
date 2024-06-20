@@ -1,0 +1,11 @@
+[gd_resource type="AnimatedTexture" load_steps=3 format=3 uid="uid://bgfnwajbryi1s"]
+
+[ext_resource type="Texture2D" uid="uid://fyjt1jmv8rbi" path="res://assets/mini_pixel_pack_3/Space_BG_Frame_1.png" id="1_1j8ef"]
+[ext_resource type="Texture2D" uid="uid://cs7vn186qlnsh" path="res://assets/mini_pixel_pack_3/Space_BG_Frame_2.png" id="2_8a4l8"]
+
+[resource]
+frames = 2
+frame_0/texture = ExtResource("1_1j8ef")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("2_8a4l8")
+frame_1/duration = 0.5
